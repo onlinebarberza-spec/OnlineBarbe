@@ -1,0 +1,71 @@
+{
+  "hair-products": [
+    {
+      "id": "hair-product-1",
+      "name": "Shampoo",
+      "price": 60,
+      "description": "A clean, nourishing shampoo for fresh hair and easy styling.",
+      "image": "./assets/catalog/hair-products/product-1/file_000000004f847243bcbbc1ead606c2f4.png",
+      "sizes": null,
+      "inStock": true
+    },
+    {
+      "id": "hair-product-2",
+      "name": "Wave Wax",
+      "price": 25,
+      "description": "A flexible wave wax for hold, definition and a smooth finish.",
+      "image": "./assets/catalog/hair-products/product-2/file_000000006cec7243a1beeb3815483240.png",
+      "sizes": null,
+      "inStock": true
+    },
+    {
+      "id": "hair-product-3",
+      "name": "Hair Conditioner",
+      "price": 80,
+      "description": "A lightweight conditioner that softens strands, adds moisture and keeps hair smooth and manageable.",
+      "image": "./assets/catalog/hair-products/product-3/main.png",
+      "sizes": null,
+      "inStock": true
+    }
+  ],
+  "brushes": [
+    {
+      "id": "brush-1",
+      "name": "Hair Brush",
+      "price": 80,
+      "description": "Add a short description of this brush here (bristle type, best for which hair type, etc.).",
+      "image": "./assets/catalog/brushes/brush-1/main.svg",
+      "sizes": null,
+      "inStock": true
+    }
+  ],
+  "clothing": [
+    {
+      "id": "tshirt",
+      "name": "Online Barber T-Shirt",
+      "price": 230,
+      "description": "A premium cotton tee with a clean barber-inspired print and comfortable everyday fit.",
+      "image": "./assets/catalog/clothing/tshirts/file_000000008a1871f4b891ce14688ca613.png",
+      "sizes": ["S", "M", "L"],
+      "inStock": true
+    },
+    {
+      "id": "hoodie",
+      "name": "Online Barber Hoodie",
+      "price": 400,
+      "description": "A heavyweight hoodie with a bold streetwear feel, soft lining and premium finish.",
+      "image": "./assets/catalog/clothing/hoodies/file_00000000c65471f48be5c229c2ad8a69.png",
+      "sizes": ["S", "M", "L"],
+      "inStock": true
+    },
+    {
+      "id": "tracksuit",
+      "name": "Online Barber Tracksuit",
+      "price": 0,
+      "description": "Add a short description of the tracksuit here (fabric, fit, print detail).",
+      "image": "./assets/catalog/clothing/tracksuits/main.svg",
+      "sizes": ["S", "M", "L"],
+      "inStock": true
+    }
+  ]
+}

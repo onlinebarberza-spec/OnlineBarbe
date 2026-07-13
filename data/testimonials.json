@@ -1,0 +1,22 @@
+{
+  "testimonials": [
+    {
+      "name": "Add Your Client Name",
+      "service": "Haircut & Line-up",
+      "rating": 5,
+      "text": "Share your real client testimonials here. Let people know your experience with Online Barber!"
+    },
+    {
+      "name": "Add Your Client Name",
+      "service": "Beard Trim",
+      "rating": 5,
+      "text": "Add a second testimonial here once you have client feedback to share."
+    },
+    {
+      "name": "Add Your Client Name",
+      "service": "Full Grooming",
+      "rating": 5,
+      "text": "Add a third testimonial here once you have client feedback to share."
+    }
+  ]
+}
