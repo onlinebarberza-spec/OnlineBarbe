@@ -129,8 +129,11 @@ async function handleBookingSubmit(e) {
   showToast("Your booking has been reserved.");
 }
 
+// Render slots immediately since this script loads at the end of the page
+// (DOM is already ready by the time we run)
+renderSlots();
+
 document.addEventListener("DOMContentLoaded", () => {
-  renderSlots();
   const form = document.getElementById("bookingForm");
   if (form) form.addEventListener("submit", handleBookingSubmit);
 
