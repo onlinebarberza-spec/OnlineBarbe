@@ -5,10 +5,13 @@
    and opens a chat with the shop number. No card data is ever collected.
    ========================================================================== */
 
-// ---- CONFIGURE THIS: replace with the real Online Barber WhatsApp number ----
+// ---- Online Barber WhatsApp number used for order and booking notifications ----
 // Format: country code + number, no spaces, no leading 0 or +
-// Example South African number 082 123 4567 -> "27821234567"
-const WHATSAPP_NUMBER = "27000000000"; // TODO: replace with real number
+// Example South African number 064 538 6347 -> "27645386347"
+const WHATSAPP_NUMBER = "27645386347";
+
+const DEFAULT_BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbwL9ynf9oxE5WE_BBbSMkqZ5pkbjUGk45vPCU3i4CMUH_2_MjxB04obBBeD85ni6cMGyQ/exec";
+const BOOKING_ENDPOINT = (window.BOOKING_ENDPOINT || new URLSearchParams(window.location.search).get("bookingEndpoint") || DEFAULT_BOOKING_ENDPOINT).trim();
 
 const CART_KEY = "online_barber_cart";
 
@@ -103,11 +106,38 @@ function buildWhatsAppOrderMessage() {
   return msg;
 }
 
-function checkoutViaWhatsApp() {
+async function recordPurchase(cart) {
+  if (!BOOKING_ENDPOINT || !cart || cart.length === 0) return;
+  const payload = {
+    type: 'purchase',
+    phone: '',
+    items: cart,
+    total: cartTotal(cart)
+  };
+  try {
+    const resp = await fetch(BOOKING_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) {
+      const result = await resp.json().catch(() => ({}));
+      console.warn('Purchase record failed', result);
+    }
+  } catch (err) {
+    console.warn('Purchase record error', err);
+  }
+}
+
+async function checkoutViaWhatsApp() {
   const message = buildWhatsAppOrderMessage();
   if (!message) { showToast("Your order list is empty"); return; }
+
+  await recordPurchase(getCart());
+
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
+  showToast('Purchase filled and WhatsApp opened.');
 }
 
 function showToast(text) {
@@ -142,4 +172,75 @@ document.addEventListener("DOMContentLoaded", () => {
   if (overlay) overlay.addEventListener("click", closeCart);
   const checkoutBtn = document.getElementById("checkoutBtn");
   if (checkoutBtn) checkoutBtn.addEventListener("click", checkoutViaWhatsApp);
+  const genRefBtn = document.getElementById('generateReferralBtn');
+  if (genRefBtn) genRefBtn.addEventListener('click', async () => {
+    const name = prompt('Enter your full name to create a referral code (optional)') || '';
+    const phone = prompt('Enter your phone / WhatsApp number (required)');
+    if (!phone) { showToast('Phone number is required to generate a referral code'); return; }
+    try {
+      const resp = await fetch(BOOKING_ENDPOINT, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'register_referrer', name, phone })
+      });
+      const json = await resp.json().catch(()=> ({}));
+      if (!resp.ok) throw new Error(json.error || 'Failed to register');
+      const msg = json.shareUrl ? `Your referral link: ${json.shareUrl}` : `Referral code: ${json.code}`;
+      alert(msg);
+    } catch (e) {
+      console.error(e);
+      showToast('Could not create referral link — is the backend running?');
+    }
+  });
+
+  const referralJoinForm = document.getElementById('referralJoinForm');
+  if (referralJoinForm) {
+    referralJoinForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const name = document.getElementById('refName').value.trim();
+      const phone = document.getElementById('refPhone').value.trim();
+      const email = document.getElementById('refEmail').value.trim();
+      const notes = document.getElementById('refMessage').value.trim();
+      const statusEl = document.getElementById('referralJoinStatus');
+      if (!name || !phone) {
+        if (statusEl) {
+          statusEl.textContent = 'Please enter both name and phone to join.';
+          statusEl.className = 'booking-status show error';
+        }
+        showToast('Name and phone are required to join the referral programme.');
+        return;
+      }
+
+      try {
+        const resp = await fetch(BOOKING_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'register_referrer', name, phone, email, notes })
+        });
+        const json = await resp.json().catch(() => ({}));
+        if (resp.ok) {
+          const message = json.status === 'pending' ? 'Referral request received. We will confirm your eligibility soon.' : 'Referral code issued successfully!';
+          if (statusEl) {
+            if (json.shareUrl) {
+              statusEl.innerHTML = `${message} <a href="${json.shareUrl}" target="_blank" rel="noopener noreferrer">Open your referral link</a>`;
+            } else if (json.code) {
+              statusEl.innerHTML = `${message} Referral code: <strong>${json.code}</strong>`;
+            } else {
+              statusEl.textContent = message;
+            }
+            statusEl.className = 'booking-status show success';
+          }
+          showToast(message);
+          referralJoinForm.reset();
+        } else {
+          throw new Error(json.error || json.message || 'Unable to join referral programme');
+        }
+      } catch (err) {
+        console.error(err);
+        if (statusEl) {
+          statusEl.textContent = 'Could not submit your referral request. Please try again later.';
+          statusEl.className = 'booking-status show error';
+        }
+        showToast('Referral submission failed.');
+      }
+    });
+  }
 });

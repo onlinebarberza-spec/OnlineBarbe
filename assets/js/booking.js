@@ -8,6 +8,7 @@
 const TIME_SLOTS = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00"];
 let selectedSlot = null;
 const DEFAULT_BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbwL9ynf9oxE5WE_BBbSMkqZ5pkbjUGk45vPCU3i4CMUH_2_MjxB04obBBeD85ni6cMGyQ/exec";
+const BOOKING_WHATSAPP_NUMBER = "27645386347";
 const BOOKING_ENDPOINT = (window.BOOKING_ENDPOINT || new URLSearchParams(window.location.search).get("bookingEndpoint") || DEFAULT_BOOKING_ENDPOINT).trim();
 function renderSlots() {
   const wrap = document.getElementById("slotsContainer");
@@ -68,6 +69,9 @@ async function handleBookingSubmit(e) {
     slot: selectedSlot,
     notes
   };
+  // include referral code if provided
+  const referralEl = document.getElementById('referralCode');
+  if (referralEl && referralEl.value.trim()) payload.referralCode = referralEl.value.trim();
 
   if (BOOKING_ENDPOINT) {
     try {
@@ -77,18 +81,32 @@ async function handleBookingSubmit(e) {
         body: JSON.stringify(payload)
       });
 
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) {
+      let result = {};
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        result = await response.json().catch(() => ({}));
+      } else {
+        const text = await response.text().catch(() => "");
+        result = { message: text || "Booking submission failed" };
+      }
+      if (!response.ok || result.status === "error") {
         throw new Error(result.error || result.message || "Booking submission failed");
       }
 
       form.reset();
       selectedSlot = null;
       renderSlots();
+      // store returned clientId/bookingId for tracking
+      if (result.clientId) {
+        try { localStorage.setItem('online_barber_clientId', result.clientId); } catch (e) {}
+      }
+      if (result.trackingId) {
+        try { localStorage.setItem('online_barber_trackingId', result.trackingId); } catch (e) {}
+      }
       if (result.whatsappUrl) {
         window.open(result.whatsappUrl, "_blank");
       }
-      setBookingStatus("Booking confirmed! We’ll be in touch shortly.", "success");
+      setBookingStatus(result.message || "Booking confirmed! We’ll be in touch shortly.", "success");
       showToast(result.message || "Your booking has been confirmed.");
       return;
     } catch (error) {
@@ -122,4 +140,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const today = new Date().toISOString().split("T")[0];
     dateInput.setAttribute("min", today);
   }
+  // prefill referral code from URL param ?ref=CODE
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      const el = document.getElementById('referralCode');
+      if (el) el.value = ref;
+    }
+  } catch (e) {}
 });

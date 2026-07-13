@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Barber — Cuts, Grooming Products &amp; Merch</title>
+<title> nline Barber — Cuts, Grooming Products &amp; Merch</title>
 <meta name="description" content="Online Barber — book a cut, shop hair products, brushes and merch. Est. 2020.">
 <link rel="icon" href="./assets/images/online-barber-logo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,7 @@
       <li><a href="./shop.html">Shop</a></li>
       <li><a href="./index.html#team">Team</a></li>
       <li><a href="./index.html#booking">Book Now</a></li>
+      <li><a href="./index.html#referral">Referral Programme</a></li>
       <li><a href="./index.html#contact">Contact</a></li>
     </ul>
     <div style="display:flex; align-items:center; gap:14px;">
@@ -173,6 +174,10 @@
           <label for="notes">Special Requests</label>
           <textarea id="notes" name="notes" rows="3" placeholder="Any special requests or notes…"></textarea>
         </div>
+        <div class="form-row">
+          <label for="referralCode">Referral Code (optional)</label>
+          <input type="text" id="referralCode" name="referralCode" placeholder="Referral code from a friend">
+        </div>
         <button type="submit" class="btn btn-primary btn-block">Book Appointment</button>
       </form>
 
@@ -181,6 +186,43 @@
         <div id="slotsContainer" class="slots-grid"></div>
         <p style="font-size:0.85rem; color:var(--smoke); margin-top:16px;">Pick a date and time slot, fill in your details, then submit your booking — it will be sent through our Apps Script endpoint and confirmed shortly.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<div class="pole-divider thin"></div>
+
+<!-- REFERRAL PROGRAMME -->
+<section id="referral" class="referral-programme">
+  <div class="wrap">
+    <div class="section-head center">
+      <span class="eyebrow">Referral Programme</span>
+      <h2>Join the Referral Programme</h2>
+      <p>Sign up here to join our referral programme. Enter your details and we’ll send you a referral link once your membership is confirmed.</p>
+    </div>
+    <div class="booking-form-container">
+      <form id="referralJoinForm" class="booking-form">
+        <div id="referralJoinStatus" class="booking-status" role="status" aria-live="polite"></div>
+        <div class="form-row">
+          <label for="refName">Full Name *</label>
+          <input type="text" id="refName" name="refName" placeholder="Your full name" required>
+        </div>
+        <div class="two-col">
+          <div class="form-row">
+            <label for="refPhone">Phone / WhatsApp *</label>
+            <input type="tel" id="refPhone" name="refPhone" placeholder="0XX XXX XXXX" required>
+          </div>
+          <div class="form-row">
+            <label for="refEmail">Email</label>
+            <input type="email" id="refEmail" name="refEmail" placeholder="you@example.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="refMessage">Why do you want to join?</label>
+          <textarea id="refMessage" name="refMessage" rows="3" placeholder="Tell us briefly why you want to join the referral programme"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Join Referral Programme</button>
+      </form>
     </div>
   </div>
 </section>
@@ -240,6 +282,7 @@
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-footer" id="cartFooter" style="display:none;">
     <div class="cart-total"><span>Total</span><span id="cartTotalValue">R0</span></div>
+    <button class="btn" id="generateReferralBtn">Get referral link</button>
     <button class="btn btn-primary btn-block" id="checkoutBtn">Send Order via WhatsApp</button>
   </div>
 </div>
