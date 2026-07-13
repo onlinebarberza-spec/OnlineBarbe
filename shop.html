@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Online Barber</title>
+<meta name="description" content="Shop Online Barber hair products, brushes and merch. Order straight through WhatsApp.">
+<link rel="icon" href="./assets/images/online-barber-logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="wrap">
+    <a href="./index.html" class="brand">
+      <img src="./assets/images/online-barber-logo.webp" alt="Online Barber logo">
+      ONLINE BARBER
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./index.html#home">Home</a></li>
+      <li><a href="./shop.html">Shop</a></li>
+      <li><a href="./index.html#team">Team</a></li>
+      <li><a href="./index.html#booking">Book Now</a></li>
+      <li><a href="./index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <button class="nav-cart" id="openCartBtn">Order (<span class="cart-count">0</span>)</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<section style="padding-top:64px; padding-bottom:40px;">
+  <div class="wrap">
+    <span class="eyebrow">The Range</span>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.6rem);">SHOP ONLINE BARBER</h1>
+    <p style="max-width:56ch;">Hair products, brushes and merch — pick your items, choose a size where needed, and send your order straight to us on WhatsApp. No card details, no accounts, just a quick chat to confirm and pay.</p>
+  </div>
+</section>
+
+<div class="pole-divider thin"></div>
+
+<section style="padding-top:56px;">
+  <div class="wrap">
+    <div class="shop-tabs" id="shopTabs"></div>
+    <div class="card-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand"><img src="./assets/images/online-barber-logo.webp" alt="Online Barber logo" style="height:34px;width:34px;">ONLINE BARBER</div>
+      <ul class="nav-links" style="position:static;">
+        <li><a href="./shop.html">Shop</a></li>
+        <li><a href="./index.html#booking">Book Now</a></li>
+        <li><a href="./index.html#team">Team</a></li>
+        <li><a href="./index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <p class="footer-copy">© 2026 Online Barber. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- CART DRAWER (shared across pages) -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3 style="margin:0;">Your Order</h3>
+    <button class="cart-close" id="cartCloseBtn">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total"><span>Total</span><span id="cartTotalValue">R0</span></div>
+    <button class="btn btn-primary btn-block" id="checkoutBtn">Send Order via WhatsApp</button>
+  </div>
+</div>
+
+<script src="./assets/js/cart.js"></script>
+<script src="./assets/js/shop.js"></script>
+</body>
+</html>
