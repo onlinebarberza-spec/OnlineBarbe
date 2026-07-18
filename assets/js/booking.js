@@ -7,9 +7,11 @@
 
 const TIME_SLOTS = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00"];
 let selectedSlot = null;
-const DEFAULT_BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbwL9ynf9oxE5WE_BBbSMkqZ5pkbjUGk45vPCU3i4CMUH_2_MjxB04obBBeD85ni6cMGyQ/exec";
 const BOOKING_WHATSAPP_NUMBER = "27645386347";
-const BOOKING_ENDPOINT = (window.BOOKING_ENDPOINT || new URLSearchParams(window.location.search).get("bookingEndpoint") || DEFAULT_BOOKING_ENDPOINT).trim();
+// NOTE: DEFAULT_BOOKING_ENDPOINT and BOOKING_ENDPOINT are already declared in cart.js,
+// which loads before this file on index.html. Re-declaring them here with `const`
+// caused a SyntaxError ("already been declared") that silently killed this whole
+// script — which is why the time slots never rendered. Do not redeclare them here.
 function renderSlots() {
   const wrap = document.getElementById("slotsContainer");
   if (!wrap) return;
