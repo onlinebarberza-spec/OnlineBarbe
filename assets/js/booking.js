@@ -1,4 +1,4 @@
-/* ==========================================================================
+ /* ==========================================================================
    ONLINE BARBER — Booking form
    Sends the booking request straight to WhatsApp (same no-backend approach
    as the shop checkout). If you later want automatic calendar bookings,
