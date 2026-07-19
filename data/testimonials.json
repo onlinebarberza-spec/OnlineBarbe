@@ -1,0 +1,22 @@
+{
+  "testimonials": [
+    {
+      "name": "Anele",
+      "service": "Haircut & Line-up",
+      "rating": 5,
+      "text": "Great haircut every single time — these guys know exactly what they're doing."
+    },
+    {
+      "name": "Brian",
+      "service": "Full Grooming",
+      "rating": 5,
+      "text": "Great vibe and experience from the moment you walk in. Highly recommend Online Barber."
+    },
+    {
+      "name": "Liyema",
+      "service": "Hair Products",
+      "rating": 5,
+      "text": "Amazing hair products — my hair has never looked or felt this good."
+    }
+  ]
+}

@@ -23,7 +23,7 @@
       "name": "Hair Conditioner",
       "price": 80,
       "description": "A lightweight conditioner that softens strands, adds moisture and keeps hair smooth and manageable.",
-      "image": "./assets/catalog/hair-products/product-3/main.png",
+      "image": "./assets/catalog/hair-products/product-1/file_000000004f847243bcbbc1ead606c2f4.png",
       "sizes": null,
       "inStock": true
     }
@@ -43,7 +43,7 @@
     {
       "id": "tshirt",
       "name": "Online Barber T-Shirt",
-      "price": 230,
+      "price": 200,
       "description": "A premium cotton tee with a clean barber-inspired print and comfortable everyday fit.",
       "image": "./assets/catalog/clothing/tshirts/file_000000008a1871f4b891ce14688ca613.png",
       "sizes": ["S", "M", "L"],
@@ -52,7 +52,7 @@
     {
       "id": "hoodie",
       "name": "Online Barber Hoodie",
-      "price": 400,
+      "price": 450,
       "description": "A heavyweight hoodie with a bold streetwear feel, soft lining and premium finish.",
       "image": "./assets/catalog/clothing/hoodies/file_00000000c65471f48be5c229c2ad8a69.png",
       "sizes": ["S", "M", "L"],
